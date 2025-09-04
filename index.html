@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            text-align: center;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #eee;
+        }
+
+        .present {
+            background-color: #c8e6c9;
+        }
+
+        .absent {
+            background-color: #ffcdd2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Student Attendance Tracking System</h2>
+
+    <input type="text" id="studentName" placeholder="Enter student name" />
+    <button onclick="addStudent()">Add Student</button>
+
+    <table id="attendanceTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Student Name</th>
+                <th>Status</th>
+                <th>Mark Present</th>
+                <th>Mark Absent</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Student rows will be added here -->
+        </tbody>
+    </table>
+
+    <script>
+        let count = 0;
+
+        function addStudent() {
+            const nameInput = document.getElementById("studentName");
+            const name = nameInput.value.trim();
+
+            if (name === "") {
+                alert("Please enter a student name.");
+                return;
+            }
+
+            count++;
+            const table = document.getElementById("attendanceTable").getElementsByTagName('tbody')[0];
+
+            const newRow = table.insertRow();
+
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
+            const cell4 = newRow.insertCell(3);
+            const cell5 = newRow.insertCell(4);
+
+            cell1.innerText = count;
+            cell2.innerText = name;
+            cell3.innerText = "Not Marked";
+            cell4.innerHTML = `<button onclick="markAttendance(this, 'Present')">Present</button>`;
+            cell5.innerHTML = `<button onclick="markAttendance(this, 'Absent')">Absent</button>`;
+
+            nameInput.value = "";
+        }
+
+        function markAttendance(button, status) {
+            const row = button.parentNode.parentNode;
+            const statusCell = row.cells[2];
+
+            statusCell.innerText = status;
+
+            if (status === 'Present') {
+                row.classList.add('present');
+                row.classList.remove('absent');
+            } else {
+                row.classList.add('absent');
+                row.classList.remove('present');
+            }
+        }
+    </script>
+
+</body>
+</html>
